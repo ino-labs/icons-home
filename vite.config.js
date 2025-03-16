@@ -14,6 +14,7 @@ export default defineConfig({
     ],
     server: {
         open: true,
-        host: true
+        host: true,
+        historyApiFallback: true,
     }
 });
