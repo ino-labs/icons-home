@@ -30,7 +30,7 @@ const NavBar: React.FC<NavBarProps> = () => {
               <ul>
                 <li><Link className='link-menu' to="/">Home</Link></li>
                 <li><Link className='link-menu' to="/about">About</Link></li>
-                <li><Link className='link-menu' to="https://github.com/n3pu/ino-icons" target="_blank" rel="noopener noreferrer">Github</Link></li>
+                <li><Link className='link-menu' to="https://github.com/ino-labs/ino-icons" target="_blank" rel="noopener noreferrer">Docs</Link></li>
                 <li><Link className='link-menu' to="https://buymeacoffee.com/n3pu" target="_blank" rel="noopener noreferrer">Buy me a coffee</Link></li>
                 <li><Link className='link-menu' to="https://www.paypal.com/donate/?business=CJPN8GQVW32UU&amount=5&no_recurring=0&item_name=Support+me+if+you+think+I%27ve+given+you+good+results&currency_code=USD" target="_blank" rel="noopener noreferrer">Donate</Link></li>
               </ul>
