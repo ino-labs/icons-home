@@ -103,23 +103,23 @@ const IconPage: React.FC = () => {
     .replace(/stroke="[^"]*"/g, `stroke="${color}"`);
 
   const handleDownload = () => {
-    // Espera que o SVG esteja renderizado
-    setTimeout(() => {
-      const svgElement = document.getElementById('svg-icon') as SVGSVGElement | null;
-      if (svgElement) {
-        const serializer = new XMLSerializer();
-        const source = serializer.serializeToString(svgElement);
-        const blob = new Blob([source], { type: 'image/svg+xml' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${name}.svg`;
-        a.click();
-        URL.revokeObjectURL(url);
-      } else {
-        console.error('SVG element not found');
-      }
-    }, 0); // Executa o código após o próximo ciclo de renderização
+    if (!updatedSvgContent) {
+      console.error("SVG content is empty");
+      return;
+    }
+  
+    // Remove quebras de linha extras para garantir um bom formato do SVG
+    const cleanedSvg = updatedSvgContent.trim();
+  
+    const blob = new Blob([cleanedSvg], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${name}.svg`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
