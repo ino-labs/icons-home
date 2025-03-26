@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Search from './Search';
-import iconSearch from '/assets/icons/ino-search.svg';
+import iconSearch from '/assets/icons/search.svg';
 
 interface ToolBarProps {
   setSearchResults: React.Dispatch<React.SetStateAction<Icon[]>>;
