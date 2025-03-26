@@ -5,11 +5,10 @@ import FooterBar from '../components/FooterBar';
 import { useDarkMode } from '../contexts/DarkModeContext';
 import iconResize from '../images/icon-resize.svg';
 import iconBorder from '../images/icon-border.svg';
-import iconClose from '/assets/icons/ino-close.svg';
-import iconCopy from '/assets/icons/ino-copy.svg';
-import iconCopyCheck from '/assets/icons/ino-copy-check.svg';
-import iconCopyX from '/assets/icons/ino-copy-x.svg';
-import iconDownload from '/assets/icons/ino-download-arrow-down.svg';
+import iconClose from '/assets/icons/close.svg';
+import iconCopy from '/assets/icons/copy.svg';
+import iconCopyCheck from '/assets/icons/copy-check.svg';
+import iconDownload from '/assets/icons/download-arrow-down.svg';
 import { MuiColorInput } from 'mui-color-input';
 
 interface Icon {
@@ -28,8 +27,6 @@ const IconPage: React.FC = () => {
   const { darkMode } = useDarkMode();
   const [iconTitle, setIconTitle] = useState<string>('');
   const [keywords, setKeywords] = useState<string[]>([]); // Adicionando state para keywords
-  const [copyIcon, setCopyIcon] = useState(iconCopy);
-  const [copyClass, setCopyClass] = useState('clicked-button');
 
   // Define a cor inicial baseada no modo dark
   const defaultColor = darkMode ? '#FFFFFF' : '#000000';
@@ -63,32 +60,18 @@ const IconPage: React.FC = () => {
     setColor(defaultColor);
   };
 
+  const [clickedButton, setClickedButton] = useState<string | null>(null);
   // Função para copiar o código SVG para a área de transferência
-  const handleCopy = () => {
-    let textToCopy = "";
+  const handleCopy = (content: string, buttonId: string) => {
   
-    if (activeTab === "svg") {
-      textToCopy = svgContent;
-    } else if (activeTab === "html") {
-      textToCopy = `<i class="icon-${name}"></i>`;
-    }
-  
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard.writeText(content)
       .then(() => {
-        setCopyIcon(iconCopyCheck); // Ícone de sucesso
-        setCopyClass("clicked-button-success");
+        setClickedButton(buttonId); // Define o botão clicado
         setTimeout(() => {
-          setCopyIcon(iconCopy); // Ícone padrão
-          setCopyClass("clicked-button");
+          setClickedButton(null); // Reseta após 1,5s
         }, 1500);
       })
       .catch(err => {
-        setCopyIcon(iconCopyX); // Ícone de erro
-        setCopyClass("clicked-button-error");
-        setTimeout(() => {
-          setCopyIcon(iconCopy); // Ícone padrão
-          setCopyClass("clicked-button");
-        }, 1500);
         console.error("Failed to copy:", err);
       });
   };
@@ -199,19 +182,29 @@ const IconPage: React.FC = () => {
                   <div className="pre-code-container">
                     <pre>{updatedSvgContent}</pre>
                   </div>
-                  <button className={copyClass +' code-copy'} onClick={handleCopy}>
-                    <img src={copyIcon} title="copy svg" alt="copy svg" />
+                  <button className={clickedButton === "svg" ? "clicked-button-success code-copy" : "code-copy"} onClick={() => handleCopy(svgContent, "svg")}>
+                    <img src={clickedButton === "svg" ? iconCopyCheck : iconCopy} title="copy svg" alt="copy svg" />
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="tab-content">
+              <div className="tab-content flex flex-col items-start">
+                <h4 className='pl-6 pt-2 -mb-2 uppercase text-xs text-[#757575]'>CSS Content:</h4>
                 <div className='code-container'>
                   <div className="pre-code-container">
-                    <pre>&lt;i class="icon-{name}"&gt;&lt;/i&gt;</pre>
+                    <pre>&lt;i class="ino ino-{name}"&gt;&lt;/i&gt;</pre>
                   </div>
-                  <button className={copyClass +' code-copy'} onClick={handleCopy}>
-                    <img src={copyIcon} title="copy svg" alt="copy svg" />
+                  <button className={clickedButton === "html1" ? "clicked-button-success code-copy" : "code-copy"} onClick={() => handleCopy(`<i class="ino ino-${name}"></i>`, "html1")}>
+                    <img src={clickedButton === "html1" ? iconCopyCheck : iconCopy} title="copy HTML content" alt="copy HTML content" />
+                  </button>
+                </div>
+                <h4 className='pl-6 pt-2 -mb-2 uppercase text-xs text-[#757575]'>Ligature:</h4>
+                <div className='code-container'>
+                  <div className="pre-code-container">
+                    <pre>&lt;i class="ino"&gt;{name}&lt;/i&gt;</pre>
+                  </div>
+                  <button className={clickedButton === "html2" ? "clicked-button-success code-copy" : "code-copy"} onClick={() => handleCopy(`<i class="ino">${name}</i>`, "html2")}>
+                    <img src={clickedButton === "html2" ? iconCopyCheck : iconCopy} title="copy ligature structure" alt="copy ligature structure" />
                   </button>
                 </div>
               </div>

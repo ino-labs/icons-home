@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDarkMode } from '../contexts/DarkModeContext';
-import iconMenuTwoBars from '/assets/icons/ino-menu-two-bars.svg';
+import iconMenuTwoBars from '/assets/icons/menu-two-bars.svg';
 import inoIconsLogo from '/ino-icons-logo.svg';
-import iconSun from '/assets/icons/ino-sun.svg';
-import iconMoon from '/assets/icons/ino-moon.svg';
+import iconSun from '/assets/icons/sun.svg';
+import iconMoon from '/assets/icons/moon.svg';
 
 interface NavBarProps {
   
@@ -43,7 +43,7 @@ const NavBar: React.FC<NavBarProps> = () => {
               <img height={32} width={32} src={inoIconsLogo} alt="" />
               INO icons
             </Link>
-            <span className='nav-icon-version'> v1</span>
+            <span className='nav-icon-version'> <Link className='nav-icon-version' to="https://github.com/ino-labs/ino-icons/releases/tag/1.0.3" target='_blank' rel="noopener noreferrer">v1.0.3</Link></span>
           </li>
         </ul>
       </div>
