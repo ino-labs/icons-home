@@ -63,7 +63,7 @@ const Search: React.FC<SearchProps> = ({ setSearchResults, icons, searchInputRef
         <div className='flex flex-auto gap-1 items-center'>
           <div className="search-tag">{(filteredResults.length > 1 ? filteredResults.length + ' founds' : filteredResults.length + ' found')}</div>
           <button className="clear-search" onClick={clearSearch}>
-            <img height={24} width={24} src="/assets/icons/ino-close.svg" alt="Clear Search" />
+            <img height={24} width={24} src="/assets/icons/close.svg" alt="Clear Search" />
           </button>
         </div>
       )}
